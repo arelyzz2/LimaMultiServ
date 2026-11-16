@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block cuerpo %}
+<header class="top"><div class="wrap">
+  <a class="logo" href="{{ url_for('cliente.inicio') }}">LimaMultiServ</a>
+  <nav><a href="#inicio">Inicio</a><a href="#catalogo">Catálogo</a></nav>
+  <form class="top-search" method="get" action="{{ url_for('cliente.inicio') }}" role="search">
+    <input type="search" name="q" value="{{ busqueda }}" placeholder="Buscar capas, bandas, banderas..." aria-label="Buscar productos">
+    <button type="submit" aria-label="Buscar">⌕</button>
+  </form>
+  <div class="acc">
+  {% if session.correo %}
+    <a class="btn lleno" href="{{ url_for('admin.panel') if session.dueno else url_for('cuenta.panel') }}">{{ 'Panel del negocio' if session.dueno else 'Mi panel' }}</a>
+  {% else %}<a class="btn" href="{{ url_for('auth.login') }}">Iniciar sesión</a>
+  <a class="btn lleno" href="{{ url_for('auth.registro') }}">Registrarse</a>{% endif %}</div>
+</div></header>
+
+<section class="hero" id="inicio">
+  <div class="txt"><span class="hero-kicker">Hecho a mano, hecho con el corazón</span>
+  <h1>Tradición, elegancia y calidad en cada confección</h1>
+  <p>Creamos confecciones especiales con dedicación y calidad para cada ocasión</p>
+  <div class="hero-actions"><a class="btn oro" href="#catalogo">Explorar catálogo <span aria-hidden="true">→</span></a>
+    <span class="hero-note">Bordados que cuentan historias</span></div></div>
+  <div class="foto" style="background-image:url('{{ url_for('static', filename='img/hero.jpg') }}')"></div>
+</section>
+
+<section class="trabajos"><div class="wrap">
+  <div class="cab"><span class="auth-kicker">El arte está en los detalles</span><h2>Confecciones para momentos que se recuerdan</h2>
+    <p>Un vistazo a los bordados y trabajos preparados en nuestro taller.</p></div>
+  <div class="trabajos-grid">
+    <figure class="trabajo trabajo-grande"><img src="{{ url_for('static', filename='img/capas.jpg') }}" alt="Bordado ceremonial dedicado a la Virgen del Carmen">
+      <figcaption>Bordados devocionales</figcaption></figure>
+    <figure class="trabajo"><img src="{{ url_for('static', filename='img/banda1.jpg') }}" alt="Banda ceremonial bordada en dorado">
+      <figcaption>Bandas de honor</figcaption></figure>
+    <figure class="trabajo"><img src="{{ url_for('static', filename='img/bandera1.jpg') }}" alt="Bandera peruana confeccionada para una ceremonia">
+      <figcaption>Banderas institucionales</figcaption></figure>
+    <figure class="trabajo"><img src="{{ url_for('static', filename='img/banderola1.jpg') }}" alt="Banderola verde con bordado y escudos">
+      <figcaption>Banderolas personalizadas</figcaption></figure>
+    <figure class="trabajo"><img src="{{ url_for('static', filename='img/capa1.jpg') }}" alt="Estandarte artesanal con bordados florales y dorados">
+      <figcaption>Diseños para celebrar</figcaption></figure>
+  </div>
+</div></section>
+
+<section id="catalogo"><div class="wrap">
+  <div class="cab"><span class="auth-kicker">Conoce lo que hacemos</span><h2>Nuestros productos</h2></div>
+  <div class="grid4">{% for nombre, img in categorias %}
+    <article class="card"><div class="foto" style="background-image:url('{{ url_for('static', filename='img/'+img) }}')"></div>
+    <div class="cuerpo"><h4>{{ nombre }}</h4><a class="btn" href="{{ url_for('cliente.inicio', categoria=nombre) }}#productos">Ver productos</a></div></article>{% endfor %}</div>
+</div></section>
+
+<section id="productos" style="padding-top:0"><div class="wrap">
+  <div class="cab"><span class="auth-kicker">Piezas hechas con dedicación</span><h2>{% if busqueda %}Resultados para "{{ busqueda }}"{% elif categoria %}Productos de {{ categoria }}{% else %}Productos destacados{% endif %}</h2>
+    {% if busqueda or categoria %}<a class="link" href="{{ url_for('cliente.inicio') }}">Ver todos los productos</a>{% endif %}</div>
+  <div class="grid4">{% for p in productos %}
+    <article class="card"><div class="foto" style="background-image:url('{{ url_for('static', filename='img/'+p.imagen) }}')"></div>
+    <div class="cuerpo"><h4>{{ p.nombre }}</h4><p>{{ p.descripcion }}</p><span class="precio">{{ precio(p.precio) }}</span>
+      <a class="btn lleno" href="{{ url_for('cuenta.solicitud') if session.correo and not session.dueno else url_for('auth.login') }}">Solicitar</a></div></article>
+    {% else %}<p>No hay productos en esta categoría por el momento.</p>{% endfor %}</div>
+</div></section>
+
+<section class="banda" id="pedidos"><div class="wrap">
+  <h2>¿Tienes un diseño especial en mente?</h2>
+  <p>Cuéntanos cómo deseas tu confección y envíanos una imagen de referencia. Podemos confeccionar según tus necesidades; el precio lo coordinamos contigo.</p>
+  {% if session.correo and not session.dueno %}
+    <a class="btn lleno" href="{{ url_for('cuenta.solicitud') }}">Solicitar pedido personalizado</a>
+    <a class="btn" href="{{ url_for('cuenta.pedidos') }}">Consultar mis pedidos</a>
+  {% elif session.dueno %}
+    <a class="btn lleno" href="{{ url_for('admin.panel') }}">Ir al panel del negocio</a>
+  {% else %}
+    <a class="btn lleno" href="{{ url_for('auth.registro') }}">Crear cuenta y solicitar</a>
+  {% endif %}
+</div></section>
+
+<footer><div class="wrap">
+  <div><h3>LimaMultiServ</h3><p>Confecciones con tradición y calidad.</p></div>
+  <div><h3>Contacto</h3><p>contacto@limamultiserv.pe</p><p><a class="link" style="color:var(--oro)" href="https://wa.me/51900000000">Escríbenos por WhatsApp</a></p></div>
+  <div><h3>Dirección</h3><p>Abancay, Apurímac, Perú</p></div>
+</div></footer>
+{% endblock %}

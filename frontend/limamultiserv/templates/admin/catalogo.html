@@ -1,0 +1,10 @@
+{% extends "admin/_marco.html" %}{% set titulo_barra = "Catálogo" %}{% set activo = "Catálogo" %}{% set fecha_hoy = "" %}
+{% block contenido %}
+<div class="panel"><div class="fila" style="justify-content:flex-end"><a class="btn lleno" href="{{ url_for('admin.producto') }}">Agregar producto</a></div>
+<table><thead><tr><th></th><th>Producto</th><th>Categoría</th><th>Precio</th><th>Destacado</th><th>Acciones</th></tr></thead><tbody>
+{% for p in productos %}<tr><td><div class="foto mini" style="background-image:url('{{ url_for('static', filename='img/'+p.imagen) }}')"></div></td>
+<td><b>{{ p.nombre }}</b><br><small>{{ p.descripcion }}</small></td><td>{{ p.categoria }}</td><td>{{ precio(p.precio) }}</td><td>{{ 'Sí' if p.destacado else 'No' }}</td>
+<td class="fila"><a class="link" href="{{ url_for('admin.producto', pid=p.id) }}">Editar</a>
+<form method="post" action="{{ url_for('admin.producto_eliminar', pid=p.id) }}" onsubmit="return confirm('¿Eliminar este producto?')"><button class="btn sm">Eliminar</button></form></td></tr>
+{% else %}<tr><td colspan="6">Aún no hay productos. Agrega el primero.</td></tr>{% endfor %}</tbody></table></div>
+{% endblock %}

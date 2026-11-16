@@ -1,0 +1,9 @@
+{% extends "admin/_marco.html" %}{% set titulo_barra = "Registrar pedido" %}{% set activo = "Pedidos" %}{% set fecha_hoy = "" %}
+{% block contenido %}
+<div class="panel"><form class="pedido admin-form" method="post" style="box-shadow:none;padding:0">
+  <label>Cliente<input name="cliente" list="cl" required><datalist id="cl">{% for c in clientes %}<option value="{{ c.nombre }}">{% endfor %}</datalist></label>
+  <label>Tipo de trabajo<select name="tipo">{% for t in tipos %}<option>{{ t }}</option>{% endfor %}</select></label>
+  <label>Fecha de entrega<input type="date" name="entrega"></label><span></span>
+  <label class="full">Detalles<textarea name="detalle" rows="4"></textarea></label>
+  <div class="full fila"><button class="btn lleno">Guardar pedido</button><a class="btn" href="{{ url_for('admin.pedidos') }}">Cancelar</a></div></form></div>
+{% endblock %}

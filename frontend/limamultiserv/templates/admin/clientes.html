@@ -1,0 +1,7 @@
+{% extends "admin/_marco.html" %}{% set titulo_barra = "Clientes" %}{% set activo = "Clientes" %}{% set fecha_hoy = "" %}
+{% block contenido %}
+<div class="panel"><form class="fila" method="get"><input name="q" value="{{ q }}" placeholder="Buscar por nombre o correo" style="min-width:300px"><button class="btn">Buscar</button></form>
+<table><thead><tr><th>Nombre</th><th>Correo</th><th>Teléfono</th><th>Pedidos</th></tr></thead><tbody>
+{% for c, n in filas %}<tr><td>{{ c.nombre }}</td><td>{{ c.correo }}</td><td>{{ c.telefono or '—' }}</td><td>{{ n }}</td></tr>
+{% else %}<tr><td colspan="4">No se encontraron clientes.</td></tr>{% endfor %}</tbody></table></div>
+{% endblock %}

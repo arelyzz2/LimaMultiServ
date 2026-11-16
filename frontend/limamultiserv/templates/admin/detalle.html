@@ -1,0 +1,13 @@
+{% extends "admin/_marco.html" %}{% set titulo_barra = "Detalle del pedido" %}{% set activo = "Pedidos" %}{% set fecha_hoy = "" %}
+{% block contenido %}
+<div class="panel" style="max-width:720px"><a class="link" href="{{ url_for('admin.pedidos') }}">Volver a pedidos</a>
+<h2 style="margin:16px 0">Pedido de {{ p.cliente }}</h2><p class="sub">{{ p.tipo }}</p>
+{% if p.adjuntos %}<div style="margin-top:16px"><b>Archivos adjuntos</b><ul class="ent">
+  {% for archivo in p.adjuntos %}<li><a class="link" href="{{ url_for('admin.pedido_archivo', pid=p.id, filename=archivo.filename) }}">{{ archivo.etiqueta }}</a></li>{% endfor %}
+</ul></div>{% endif %}
+<form class="pedido admin-form" method="post" style="box-shadow:none;padding:24px 0 0">
+  <label>Estado<select name="estado">{% for e in estados %}<option {{ 'selected' if e == p.estado }}>{{ e }}</option>{% endfor %}</select></label>
+  <label>Fecha de entrega<input type="date" name="entrega" value="{{ p.entrega or '' }}"></label>
+  <label class="full">Detalles del pedido<textarea name="detalle" rows="5">{{ p.detalle }}</textarea></label>
+  <div class="full"><button class="btn lleno">Guardar cambios</button></div></form></div>
+{% endblock %}

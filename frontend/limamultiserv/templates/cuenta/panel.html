@@ -1,0 +1,23 @@
+{% extends "cuenta/_marco.html" %}{% set titulo = "Mi panel" %}{% set activo = "Resumen" %}
+{% block contenido %}
+<section class="account-welcome">
+  <div><span class="auth-kicker">Tu espacio personal</span><h2>¡Hola, {{ cliente.nombre }}!</h2>
+    <p>Consulta tus pedidos o cuéntanos qué te gustaría confeccionar.</p></div>
+  <a class="btn lleno" href="{{ url_for('cuenta.solicitud') }}">Solicitar confección <span aria-hidden="true">→</span></a>
+</section>
+<div class="account-stats">
+  <article class="account-stat"><span>Pedidos registrados</span><b>{{ total }}</b></article>
+  <article class="account-stat"><span>Pendientes</span><b>{{ pendientes }}</b></article>
+  <article class="account-stat"><span>Datos de contacto</span><b class="account-stat-text">{{ cliente.telefono or 'Agrega tu teléfono' }}</b></article>
+</div>
+<section class="panel account-panel">
+  <div class="account-section-heading"><div><span class="auth-kicker">Seguimiento</span><h2>Pedidos recientes</h2></div>
+    <a class="link" href="{{ url_for('cuenta.pedidos') }}">Ver todos</a></div>
+  <table><thead><tr><th>Tipo de trabajo</th><th>Fecha de entrega</th><th>Estado</th></tr></thead><tbody>
+    {% for p in pedidos %}<tr><td>{{ p.tipo }}</td><td>{{ p.entrega|fecha }}</td>
+      <td><span class="tag {{ p.estado|replace(' ','-') }}">{{ p.estado }}</span></td></tr>
+    {% else %}<tr><td colspan="3">Aún no tienes pedidos. Cuando envíes una solicitud, podrás seguirla aquí.</td></tr>{% endfor %}
+  </tbody></table>
+</section>
+<a class="account-edit-prompt" href="{{ url_for('cuenta.perfil') }}"><span>◉</span><div><b>¿Tus datos cambiaron?</b><small>Actualiza tu perfil para que podamos contactarte.</small></div><strong>Editar perfil →</strong></a>
+{% endblock %}

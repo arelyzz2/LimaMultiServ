@@ -1,0 +1,12 @@
+{% extends "cuenta/_marco.html" %}{% set titulo = "Mis pedidos" %}{% set activo = "Mis pedidos" %}
+{% block contenido %}
+<section class="panel account-panel">
+  <div class="account-section-heading"><div><span class="auth-kicker">Seguimiento de tus solicitudes</span><h2>Todos mis pedidos</h2></div>
+    <a class="btn lleno" href="{{ url_for('cuenta.solicitud') }}">Nuevo pedido</a></div>
+  <div class="account-table-wrap"><table><thead><tr><th>Tipo de trabajo</th><th>Fecha de entrega</th><th>Estado</th><th>Detalle</th></tr></thead><tbody>
+    {% for p in pedidos %}<tr><td>{{ p.tipo }}</td><td>{{ p.entrega|fecha }}</td>
+      <td><span class="tag {{ p.estado|replace(' ','-') }}">{{ p.estado }}</span></td><td>{{ p.detalle }}</td></tr>
+    {% else %}<tr><td colspan="4">Aún no tienes pedidos registrados.</td></tr>{% endfor %}
+  </tbody></table></div>
+</section>
+{% endblock %}

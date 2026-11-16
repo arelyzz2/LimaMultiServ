@@ -1,0 +1,17 @@
+BACKEND LIMAMULTISERV
+
+Tecnologías: Java 17, Spring Boot 3, Spring Data JPA, MySQL, Maven, JUnit y Mockito.
+
+Ejecución:
+1. Configurar MySQL y credenciales en src/main/resources/application.properties.
+2. Abrir terminal en esta carpeta.
+3. Ejecutar: mvn clean test
+4. Ejecutar: mvn spring-boot:run
+5. API: http://localhost:8080
+
+Endpoints:
+- /api/clientes
+- /api/productos
+- /api/pedidos
+
+Los diagramas se entregan en un paquete separado.

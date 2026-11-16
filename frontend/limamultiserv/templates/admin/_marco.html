@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block titulo %}{{ titulo_barra }} · LimaMultiServ{% endblock %}
+{% block cuerpo %}
+<div class="layout">
+<aside class="side"><div class="logo">LimaMultiServ</div>
+  {% set menu = [('Panel principal','admin.panel','M3 11 12 4l9 7v9H3z'),('Pedidos','admin.pedidos','M6 3h9l3 3v15H6z'),('Clientes','admin.clientes','M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 4-6 8-6s8 2 8 6'),('Catálogo','admin.catalogo','M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z'),('Calendario de entregas','admin.calendario','M4 6h16v14H4zM4 10h16M8 3v4M16 3v4')] %}
+  {% for n, ep, d in menu %}<a href="{{ url_for(ep) }}" class="{{ 'act' if n == activo }}"><svg viewBox="0 0 24 24"><path d="{{ d }}"/></svg>{{ n }}</a>{% endfor %}
+  <a class="fin" href="{{ url_for('auth.salir') }}"><svg viewBox="0 0 24 24"><path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"/></svg>Cerrar sesión</a>
+</aside>
+<div class="main">
+<header class="bar"><h1>{{ titulo_barra }}</h1><small>{{ fecha_hoy }}</small>
+  <svg class="ic" viewBox="0 0 24 24" style="color:var(--vino)"><path d="M6 17V11a6 6 0 0 1 12 0v6l2 2H4zM10 21h4"/></svg>
+  <div class="avatar">{{ session.nombre[0] }}</div><div><b style="font:500 14px Poppins">{{ session.nombre }}</b><small style="display:block">Dueña del negocio</small></div>
+</header>
+<div class="cont">{% for m in get_flashed_messages() %}<div class="aviso">{{ m }}</div>{% endfor %}{% block contenido %}{% endblock %}</div>
+</div></div>
+{% endblock %}

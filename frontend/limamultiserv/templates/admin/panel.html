@@ -1,0 +1,21 @@
+{% extends "admin/_marco.html" %}{% set titulo_barra = "Panel principal" %}{% set activo = "Panel principal" %}{% set fecha_hoy = fecha %}
+{% set iconos = {
+ 'pedidos':'<path d="M6 3h9l3 3v15H6z"/><path d="M9 11h6M9 15h6"/>',
+ 'reloj':'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ 'aguja':'<path d="M4 20 18 6"/><circle cx="19" cy="5" r="2"/><path d="M6 14c3 0 3 4 6 4"/>',
+ 'check':'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>'} %}
+{% block contenido %}
+  <div><h2 style="font-size:20px;margin-bottom:16px">Resumen de pedidos</h2>
+  <div class="res">{% for n, v, i in resumen %}
+    <div class="kpi"><svg class="ic" viewBox="0 0 24 24">{{ iconos[i]|safe }}</svg><div><b>{{ v }}</b>{{ n }}</div></div>{% endfor %}</div></div>
+  <div class="dos">
+    <div class="panel"><h2 style="font-size:20px">Pedidos recientes</h2>
+      <table><thead><tr><th>Cliente</th><th>Tipo de trabajo</th><th>Fecha de entrega</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>
+      {% for p in recientes %}<tr><td>{{ p.cliente }}</td><td>{{ p.tipo }}</td><td>{{ p.entrega|fecha }}</td>
+        <td><span class="tag {{ p.estado|replace(' ','-') }}">{{ p.estado }}</span></td><td><a class="link" href="{{ url_for('admin.detalle', pid=p.id) }}">Ver detalle</a></td></tr>{% endfor %}
+      </tbody></table></div>
+    <div class="panel"><h2 style="font-size:20px">Próximas entregas</h2>
+      <ul class="ent">{% for p in proximas %}<li><div><b>{{ p.cliente }}</b><small>{{ p.tipo }} · {{ p.entrega|fecha }}</small></div>
+        <span class="tag {{ p.estado|replace(' ','-') }}" style="align-self:flex-start">{{ p.estado }}</span></li>{% endfor %}</ul></div>
+  </div>
+{% endblock %}

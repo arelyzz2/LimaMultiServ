@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block titulo %}{{ titulo }} · Mi cuenta · LimaMultiServ{% endblock %}
+{% block cuerpo %}
+<div class="account-layout">
+  <aside class="account-side">
+    <a class="account-logo" href="{{ url_for('cliente.inicio') }}">LimaMultiServ</a>
+    <div class="account-user">
+      <span class="account-avatar">{{ session.nombre[0]|upper }}</span>
+      <div><b>{{ session.nombre }}</b><small>Mi cuenta</small></div>
+    </div>
+    <nav class="account-nav" aria-label="Navegación de mi cuenta">
+      <a class="{{ 'active' if activo == 'Resumen' }}" href="{{ url_for('cuenta.panel') }}"><span>⌂</span> Resumen</a>
+      <a class="{{ 'active' if activo == 'Mis pedidos' }}" href="{{ url_for('cuenta.pedidos') }}"><span>▤</span> Mis pedidos</a>
+      <a class="{{ 'active' if activo == 'Nueva solicitud' }}" href="{{ url_for('cuenta.solicitud') }}"><span>✦</span> Nueva solicitud</a>
+      <a class="{{ 'active' if activo == 'Mi perfil' }}" href="{{ url_for('cuenta.perfil') }}"><span>◉</span> Mi perfil</a>
+    </nav>
+    <a class="account-home" href="{{ url_for('cliente.inicio') }}">← Volver a la tienda</a>
+    <a class="account-logout" href="{{ url_for('auth.salir') }}"><span>↪</span> Cerrar sesión</a>
+  </aside>
+  <main class="account-main">
+    <header class="account-topbar">
+      <div><span class="auth-kicker">Área de cliente</span><h1>{{ titulo }}</h1></div>
+      <a class="account-profile-link" href="{{ url_for('cuenta.perfil') }}">{{ session.nombre }} <span>›</span></a>
+    </header>
+    <div class="account-content">
+      {% for m in get_flashed_messages() %}<div class="aviso">{{ m }}</div>{% endfor %}
+      {% block contenido %}{% endblock %}
+    </div>
+  </main>
+</div>
+{% endblock %}

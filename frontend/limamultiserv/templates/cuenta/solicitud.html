@@ -1,0 +1,18 @@
+{% extends "cuenta/_marco.html" %}{% set titulo = "Nueva solicitud" %}{% set activo = "Nueva solicitud" %}
+{% block contenido %}
+<section class="panel account-panel account-request-panel">
+  <span class="auth-kicker">Cuéntanos tu idea</span><h2>Solicita tu confección</h2>
+  <p class="account-help">Describe el diseño y adjunta una imagen de referencia si la tienes. Coordinaremos contigo los detalles y el precio.</p>
+  <form class="pedido account-request-form" method="post" enctype="multipart/form-data" action="{{ url_for('cliente.pedido_personalizado') }}">
+    <label>Tipo de confección<select name="tipo"><option>Capa patronal</option><option>Banda de honor</option><option>Bandera</option><option>Banderola</option><option>Otra prenda</option></select></label>
+    <label>Tipo de tela<input name="tela" placeholder="Ej. terciopelo, satén"></label>
+    <label>Medidas<input name="medidas" placeholder="Ej. 1.20 × 0.80 m"></label>
+    <label>Colores<input name="colores" placeholder="Ej. vino y dorado"></label>
+    <label>Logo o diseño<input type="file" name="logo" accept="image/jpeg,image/png,image/webp"></label>
+    <label>Acabado<select name="acabado"><option>Bordado</option><option>Estampado</option></select></label>
+    <label class="full">Imagen de referencia<input type="file" name="referencia" accept="image/jpeg,image/png,image/webp"></label>
+    <label class="full">Descripción adicional<textarea name="descripcion" rows="4" placeholder="Cuéntanos los detalles de tu idea"></textarea></label>
+    <div class="full"><button class="btn lleno">Enviar solicitud</button></div>
+  </form>
+</section>
+{% endblock %}

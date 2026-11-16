@@ -1,0 +1,27 @@
+{% extends "base.html" %}{% block cuerpo %}
+<main class="auth-page">
+  <section class="auth-art">
+    <a class="logo" href="{{ url_for('cliente.inicio') }}">LimaMultiServ</a>
+    <div class="auth-message">
+      <span class="auth-kicker">Una cuenta, muchas posibilidades</span>
+      <h1>Tu próxima celebración empieza con una idea.</h1>
+      <p>Cuéntanos qué imaginas. Nosotros ponemos el cuidado, el bordado y la tradición.</p>
+    </div>
+    <span class="auth-caption">Confecciones especiales hechas con cariño</span>
+  </section>
+  <section class="auth-panel">
+    <form class="auth auth-card" method="post" action="{{ url_for('auth.registro') }}">
+      <div class="auth-emblem" aria-hidden="true">✦</div>
+      <span class="auth-kicker">Bienvenida/o a LimaMultiServ</span>
+      <h2>Crea tu cuenta</h2>
+      <p class="auth-intro">Regístrate para solicitar tus confecciones y seguir cada pedido.</p>
+      {% for m in get_flashed_messages() %}<div class="aviso">{{ m }}</div>{% endfor %}
+      <label>Nombre completo<input name="nombre" value="{{ nombre }}" maxlength="100" placeholder="¿Cómo te llamas?" autocomplete="name" required></label>
+      <label>Correo electrónico<input type="email" name="correo" value="{{ correo }}" maxlength="254" placeholder="tu@correo.com" autocomplete="email" required></label>
+      <label>Contraseña<input type="password" name="clave" minlength="6" maxlength="128" placeholder="Al menos 6 caracteres" autocomplete="new-password" required></label>
+      <button class="btn lleno auth-submit">Crear mi cuenta <span aria-hidden="true">→</span></button>
+      <p class="auth-switch">¿Ya tienes una cuenta? <a class="link" href="{{ url_for('auth.login') }}">Inicia sesión</a></p>
+      <a class="auth-back" href="{{ url_for('cliente.inicio') }}">← Volver a la página principal</a>
+    </form>
+  </section>
+</main>{% endblock %}

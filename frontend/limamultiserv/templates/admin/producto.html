@@ -1,0 +1,11 @@
+{% extends "admin/_marco.html" %}{% set titulo_barra = "Editar producto" if p else "Agregar producto" %}{% set activo = "Catálogo" %}{% set fecha_hoy = "" %}
+{% block contenido %}
+<div class="panel"><form class="pedido admin-form" method="post" enctype="multipart/form-data" style="box-shadow:none;padding:0">
+  <label>Nombre<input name="nombre" value="{{ p.nombre if p }}" required></label>
+  <label>Categoría<select name="categoria">{% for c in categorias %}<option {{ 'selected' if p and p.categoria == c }}>{{ c }}</option>{% endfor %}</select></label>
+  <label>Precio en soles (vacío = a coordinar)<input type="number" step="0.01" min="0" name="precio" value="{{ p.precio if p and p.precio is not none }}"></label>
+  <label>Imagen<input type="file" name="imagen" accept="image/*"></label>
+  <label class="full">Descripción breve<textarea name="descripcion" rows="3">{{ p.descripcion if p }}</textarea></label>
+  <label class="full" style="flex-direction:row;align-items:center"><input type="checkbox" name="destacado" {{ 'checked' if p and p.destacado }}> Mostrar en productos destacados (máximo 4)</label>
+  <div class="full fila"><button class="btn lleno">Guardar producto</button><a class="btn" href="{{ url_for('admin.catalogo') }}">Cancelar</a></div></form></div>
+{% endblock %}

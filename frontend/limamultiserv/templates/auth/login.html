@@ -1,0 +1,26 @@
+{% extends "base.html" %}{% block cuerpo %}
+<main class="auth-page">
+  <section class="auth-art">
+    <a class="logo" href="{{ url_for('cliente.inicio') }}">LimaMultiServ</a>
+    <div class="auth-message">
+      <span class="auth-kicker">Tradición hecha a mano</span>
+      <h1>Detalles que honran nuestra fe y nuestras raíces.</h1>
+      <p>Confecciones bordadas con dedicación para acompañar tus celebraciones más especiales.</p>
+    </div>
+    <span class="auth-caption">Bordados artesanales · Abancay, Apurímac</span>
+  </section>
+  <section class="auth-panel">
+    <form class="auth auth-card" method="post" action="{{ url_for('auth.login') }}">
+      <div class="auth-emblem" aria-hidden="true">✦</div>
+      <span class="auth-kicker">Qué gusto tenerte de vuelta</span>
+      <h2>Inicia sesión</h2>
+      <p class="auth-intro">Ingresa a tu cuenta para solicitar una confección o consultar tus pedidos.</p>
+      {% for m in get_flashed_messages() %}<div class="aviso">{{ m }}</div>{% endfor %}
+      <label>Correo electrónico<input type="email" name="correo" value="{{ correo }}" placeholder="tu@correo.com" autocomplete="email" required></label>
+      <label>Contraseña<input type="password" name="clave" placeholder="Tu contraseña" autocomplete="current-password" required></label>
+      <button class="btn lleno auth-submit">Iniciar sesión <span aria-hidden="true">→</span></button>
+      <p class="auth-switch">¿Aún no tienes cuenta? <a class="link" href="{{ url_for('auth.registro') }}">Regístrate aquí</a></p>
+      <a class="auth-back" href="{{ url_for('cliente.inicio') }}">← Volver a la página principal</a>
+    </form>
+  </section>
+</main>{% endblock %}

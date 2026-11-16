@@ -1,0 +1,11 @@
+{% extends "admin/_marco.html" %}{% set titulo_barra = "Calendario de entregas" %}{% set activo = "Calendario de entregas" %}{% set fecha_hoy = "" %}
+{% block contenido %}
+<div class="panel"><div class="fila" style="justify-content:space-between"><a class="btn sm" href="{{ url_for('admin.calendario', m=ant) }}">Mes anterior</a>
+<h2 style="font-size:20px">{{ titulo }}</h2><a class="btn sm" href="{{ url_for('admin.calendario', m=sig) }}">Mes siguiente</a></div>
+<div class="cal">{% for d in ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'] %}<b>{{ d }}</b>{% endfor %}
+{% for sem in semanas %}{% for d in sem %}<div class="dia {{ 'hoy' if d == hoy and d }}">{% if d %}<span>{{ d }}</span>
+{% for p in dias.get(d, []) %}<a class="{{ 't' if p.estado == 'Terminado' else 'p' if p.estado == 'Pendiente' }}" href="{{ url_for('admin.detalle', pid=p.id) }}" title="{{ p.tipo }} · {{ p.estado }}">{{ p.cliente }}</a>{% endfor %}{% endif %}</div>{% endfor %}{% endfor %}</div>
+<p style="margin-top:16px;font-size:13px">Dorado: pendiente · Vino: en proceso · Gris: terminado</p>
+{% if sin_fecha %}<h3 style="margin-top:24px;font-size:16px">Pedidos sin fecha de entrega</h3><ul class="ent">
+{% for p in sin_fecha %}<li><a class="link" href="{{ url_for('admin.detalle', pid=p.id) }}">{{ p.cliente }} · {{ p.tipo }}</a></li>{% endfor %}</ul>{% endif %}</div>
+{% endblock %}

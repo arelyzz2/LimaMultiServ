@@ -1,0 +1,17 @@
+{% extends "cuenta/_marco.html" %}{% set titulo = "Mi perfil" %}{% set activo = "Mi perfil" %}
+{% block contenido %}
+<section class="panel account-panel account-profile-panel">
+  <div class="account-section-heading"><div><span class="auth-kicker">Tus datos personales</span><h2>Información de contacto</h2></div></div>
+  <p class="account-help">Mantén tus datos al día para que podamos coordinar tus confecciones.</p>
+  <form class="account-form" method="post" action="{{ url_for('cuenta.perfil') }}">
+    <label>Nombre completo<input name="nombre" value="{{ nombre }}" maxlength="100" autocomplete="name" required></label>
+    <label>Correo electrónico<input type="email" value="{{ cliente.correo }}" disabled><small>Este correo se usa para iniciar sesión y no se puede cambiar.</small></label>
+    <label>Teléfono de contacto<input name="telefono" value="{{ telefono }}" maxlength="30" autocomplete="tel" placeholder="Tu número de teléfono"></label>
+    <div class="account-password-heading"><h3>Cambiar contraseña</h3><p>Déjala en blanco si no deseas cambiarla.</p></div>
+    <label>Contraseña actual<input type="password" name="clave_actual" autocomplete="current-password"></label>
+    <label>Nueva contraseña<input type="password" name="clave_nueva" minlength="6" maxlength="128" autocomplete="new-password"></label>
+    <label class="account-full">Confirmar nueva contraseña<input type="password" name="confirmar_clave" minlength="6" maxlength="128" autocomplete="new-password"></label>
+    <div class="account-full"><button class="btn lleno">Guardar cambios</button></div>
+  </form>
+</section>
+{% endblock %}

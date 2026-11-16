@@ -1,0 +1,11 @@
+{% extends "admin/_marco.html" %}{% set titulo_barra = "Pedidos" %}{% set activo = "Pedidos" %}{% set fecha_hoy = "" %}
+{% block contenido %}
+<div class="panel"><div class="fila" style="justify-content:space-between">
+  <div class="fila filtros"><a class="{{ 'on' if not estado }}" href="{{ url_for('admin.pedidos') }}">Todos</a>
+  {% for e in ['Pendiente','En proceso','Terminado'] %}<a class="{{ 'on' if e == estado }}" href="{{ url_for('admin.pedidos', estado=e) }}">{{ e }}</a>{% endfor %}</div>
+  <a class="btn lleno" href="{{ url_for('admin.pedido_nuevo') }}">Registrar pedido</a></div>
+<table><thead><tr><th>Cliente</th><th>Tipo de trabajo</th><th>Fecha de entrega</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>
+{% for p in pedidos %}<tr><td>{{ p.cliente }}</td><td>{{ p.tipo }}</td><td>{{ p.entrega|fecha }}</td>
+<td><span class="tag {{ p.estado|replace(' ','-') }}">{{ p.estado }}</span></td><td><a class="link" href="{{ url_for('admin.detalle', pid=p.id) }}">Ver detalle</a></td></tr>
+{% else %}<tr><td colspan="5">No hay pedidos con este estado.</td></tr>{% endfor %}</tbody></table></div>
+{% endblock %}
